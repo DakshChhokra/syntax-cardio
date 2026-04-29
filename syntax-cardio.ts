@@ -53,7 +53,14 @@ export function sortTitlesIgnoringArticles(titles: string[]): string[] {
 
 /** Split `arr` into consecutive chunks of length `size` (last chunk may be shorter). Assume `size > 0`. */
 export function chunk<T>(arr: T[], size: number): T[][] {
-  return [];
+  return arr.reduce<T[][]>((acc, curr, idx) => {
+    if (idx % size === 0) {
+      acc.push([curr])
+    } else {
+      acc[acc.length - 1].push(curr)
+    }
+    return acc
+  }, [] as T[][]);
 }
 
 // ─── Harder ───
