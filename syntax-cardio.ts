@@ -9,30 +9,35 @@
 
 // ─── Testing ───
 export function lowercaseHello(name: string) {
-  return;
+  return `hello${name && " " + name.toLowerCase()}`;
 }
 // ─── Easy ───
 
 /** Sum an array of numbers. */
 export function sum(numbers: number[]): number {
-  return 0;
+  return numbers.reduce((acc, curr) => acc + curr, 0);
 }
 
 /** Remove duplicates, keep first occurrence order (use strict equality). */
-export function unique<T>(items: T[]): T[] {
-  return [];
+export function unique<T>(items: T[]): T[] {  
+  // return [...new Set<T>(items)]
+  return items.reduce((acc, curr) => acc.some(e => e === curr) ? acc : [...acc, curr], [] as T[])
 }
 
 /** Split into elements that satisfy `pred` vs those that do not (original relative order preserved in each bucket). */
 export function partition<T>(arr: T[], pred: (value: T) => boolean): { pass: T[]; fail: T[] } {
-  return { pass: [], fail: [] };
+  // return { pass: arr.filter(v => pred(v)), fail:  arr.filter(v => !pred(v)) };
+  return arr.reduce((acc, curr) => {
+    pred(curr) ? acc.pass.push(curr) : acc.fail.push(curr);
+    return acc
+  }, { pass: [] as T[], fail: [] as T[] } )
 }
 
 export type User = { id: string; name: string };
 
 /** Return the user’s `name` for `id`, or `null` if not found. */
 export function findNameById(users: User[], id: string): string | null {
-  return null;
+  return users.find(user => user.id === id)?.name ?? null
 }
 
 // ─── Medium ───
