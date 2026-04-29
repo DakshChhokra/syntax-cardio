@@ -47,7 +47,8 @@ export function findNameById(users: User[], id: string): string | null {
  * Compare the remainder (case-sensitive OK; tests use consistent casing).
  */
 export function sortTitlesIgnoringArticles(titles: string[]): string[] {
-  return [];
+  // return titles.sort((a, b) => a.replace("A ", "").replace("An ", "").replace("The ", "").localeCompare(b.replace("A ", "").replace("An ", "").replace("The ", "")));
+  return titles.sort((a, b) => a.replace(/^(A |An |The |a |an |the )/, "").localeCompare(b.replace(/^(A |An |The |a |an |the )/, "")))
 }
 
 /** Split `arr` into consecutive chunks of length `size` (last chunk may be shorter). Assume `size > 0`. */
