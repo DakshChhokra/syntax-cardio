@@ -99,43 +99,56 @@ export const transportData = [
 // Array.prototype.filter()
 // 1. Filter the list of inventors for those who were born in the 1500's
 export function exercise1(list: Inventor[]): Inventor[] {
-  return ['wes'];
+  return list.filter(inventor => inventor.year >= 1500 && inventor.year < 1600);
 }
 
 // Array.prototype.map()
 // 2. Give us an array of the inventors first and last names
 export function exercise2(list: Inventor[]): string[] {
-  return [];
+  return list.map((inventor) => `${inventor.first} ${inventor.last}`)
 }
 
 // Array.prototype.sort()
 // 3. Sort the inventors by birthdate, oldest to youngest
 export function exercise3(list: Inventor[]): Inventor[] {
-  return [];
+  return list.sort((a, b) => a.year - b.year);
 }
 
 // Array.prototype.reduce()
 // 4. How many years did all the inventors live all together?
 export function exercise4(list: Inventor[]): number {
-  return 0;
+  return list.reduce((acc, curr) => acc + (curr.passed - curr.year), 0);
 }
 
 // 5. Sort the inventors by years lived (longest-lived first)
 export function exercise5(list: Inventor[]): Inventor[] {
-  return [];
+  return list.sort((a, b) => (b.passed - b.year) - (a.passed - a.year));
 }
 
 // 6. Boulevards in Paris that contain 'de' anywhere in the name
 export function exercise6(boulevardNames: string[]): string[] {
-  return [];
+  return boulevardNames.filter(boulevardName => boulevardName.toLocaleLowerCase().includes('de'));
 }
 
 // 7. Sort the people alphabetically by last name
 export function exercise7(list: string[]): string[] {
-  return [];
+  const getLast = (input: string) => input.split(",")[0].trim().toLocaleLowerCase()
+  return list.sort((a , b) => getLast(a).localeCompare(getLast(b)));
 }
 
 // 8. Sum up the instances of each transport type
 export function exercise8(items: string[]): Record<string, number> {
-  return {};
+  return items.reduce((acc, curr) => {
+    acc[curr] ? acc[curr]+= 1 : acc[curr] = 1;
+    return acc;
+   }, {} as  Record<string, number>);
 }
+
+console.log(exercise1(inventors))
+console.log(exercise2(inventors))
+console.log(exercise3(inventors))
+console.log(exercise4(inventors))
+console.log(exercise5(inventors))
+console.log(exercise6(parisBoulevards))
+console.log(exercise7(people))
+console.log(exercise8(transportData))
