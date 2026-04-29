@@ -67,7 +67,15 @@ export function chunk<T>(arr: T[], size: number): T[][] {
 
 /** Cumulative sum at each step. */
 export function runningTotal(values: number[]): number[] {
-  return [];
+  // return values.map((val, idx, arr) => arr.splice(idx+1).reduce((acc, curr) => acc + curr, 0) + val);
+  return values.reduce<number[]>((acc, curr) => {
+    if (acc.length === 0) {
+      acc.push(curr)
+    } else {
+      acc.push(acc[acc.length - 1] + curr)
+    }
+    return acc
+  }, [])
 }
 
 export type ScoreRow = { studentId: string; subject: string; score: number };
