@@ -146,6 +146,31 @@ describe('harder — top N per subject', () => {
       art: [{ studentId: 'x', score: 40 }],
     });
   });
+
+  it('keeps stable input order for tied scores', () => {
+  const rows: ScoreRow[] = [
+    { studentId: 'a', subject: 'math', score: 90 },
+    { studentId: 'b', subject: 'math', score: 90 },
+    { studentId: 'c', subject: 'math', score: 90 },
+  ];
+
+  expect(topNPerSubject(rows, 2)).toEqual({
+    math: [
+      { studentId: 'a', score: 90 },
+      { studentId: 'b', score: 90 },
+    ],
+  });
+});
+
+it('returns only subject with empy lists object when n is 0', () => {
+  const rows: ScoreRow[] = [
+    { studentId: 'a', subject: 'math', score: 90 },
+  ];
+
+  expect(topNPerSubject(rows, 0)).toEqual({
+    math: []
+  });
+});
 });
 
 // ─── Hard ───
