@@ -122,7 +122,20 @@ export type DocWords = { id: string; words: string[] };
  * Word → sorted list of document ids that contain that word (each id once per word).
  */
 export function invertedIndex(docs: DocWords[]): Record<string, string[]> {
-  return {}
+  const wordMap: Record<string, Set<string>> = {}
+  docs.forEach((docWords) => {
+    docWords.words.forEach((word) => {
+      wordMap[word] = (wordMap[word] ?? new Set<string>).add(docWords.id)
+    })
+  })
+
+  const finalResult: Record<string, string[]> = {}
+
+  for (let x of Object.keys(wordMap)) {
+    finalResult[x] = [...wordMap[x]].sort()
+  }
+
+  return finalResult;
 }
 
 export type City = { name: string; state: string; population: number };
