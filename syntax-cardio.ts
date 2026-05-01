@@ -145,5 +145,42 @@ export type City = { name: string; state: string; population: number };
  * sorted **alphabetically** (A→Z).
  */
 export function groupStatesByPopulation(cities: City[]): { state: string; totalPopulation: number; cities: string[] }[] {
-  return [];
+
+  type StateDetails = {
+    cities: City[];
+    population: number;
+  };
+
+  const stateMap = cities.reduce<Record<string, StateDetails>>(
+    (acc, city) => {
+      const existing = acc[city.state];
+
+      if (existing) {
+        existing.cities.push(city);
+        existing.population += city.population;
+      } else {
+        acc[city.state] = {
+          cities: [city],
+          population: city.population,
+        };
+      }
+
+      return acc;
+    },
+    {}
+  );
+
+  return Object.entries(stateMap)
+    .sort(
+      ([stateA, detailsA], [stateB, detailsB]) =>
+        detailsB.population - detailsA.population ||
+        stateA.localeCompare(stateB)
+    )
+    .map(([state, details]) => ({
+      state,
+      totalPopulation: details.population,
+      cities: details.cities
+        .map(({ name }) => name)
+        .sort((a, b) => a.localeCompare(b)),
+    }));
 }
