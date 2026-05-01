@@ -106,13 +106,13 @@ export function topNPerSubject(rows: ScoreRow[], n: number): Record<string, { st
   //   return rec;
 
   return rows
-    .reduce((acc, curr) => {
+    .reduce<Record<string, { studentId: string; score: number }[]>>((acc, curr) => {
       acc[curr.subject] =
         [...(acc[curr.subject] ?? []), { studentId: curr.studentId, score: curr.score }]
           .sort((a, b) => b.score - a.score)
           .slice(0, n)
       return acc;
-    }, {} as Record<string, { studentId: string; score: number }[]>);
+    }, {});
 }
 // ─── Hard ───
 
@@ -122,7 +122,7 @@ export type DocWords = { id: string; words: string[] };
  * Word → sorted list of document ids that contain that word (each id once per word).
  */
 export function invertedIndex(docs: DocWords[]): Record<string, string[]> {
-  return {};
+  return {}
 }
 
 export type City = { name: string; state: string; population: number };
