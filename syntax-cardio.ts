@@ -19,7 +19,7 @@ export function sum(numbers: number[]): number {
 }
 
 /** Remove duplicates, keep first occurrence order (use strict equality). */
-export function unique<T>(items: T[]): T[] {  
+export function unique<T>(items: T[]): T[] {
   // return [...new Set<T>(items)]
   return items.reduce((acc, curr) => acc.some(e => e === curr) ? acc : [...acc, curr], [] as T[])
 }
@@ -30,7 +30,7 @@ export function partition<T>(arr: T[], pred: (value: T) => boolean): { pass: T[]
   return arr.reduce((acc, curr) => {
     pred(curr) ? acc.pass.push(curr) : acc.fail.push(curr);
     return acc
-  }, { pass: [] as T[], fail: [] as T[] } )
+  }, { pass: [] as T[], fail: [] as T[] })
 }
 
 export type User = { id: string; name: string };
