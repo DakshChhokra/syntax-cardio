@@ -85,9 +85,35 @@ export type ScoreRow = { studentId: string; subject: string; score: number };
  * Ties: stable by original order in the input array.
  */
 export function topNPerSubject(rows: ScoreRow[], n: number): Record<string, { studentId: string; score: number }[]> {
-  return {};
-}
+  //   const rec:  Record<string, { studentId: string; score: number }[]> = {}
+  //   rows.forEach((scoreRow) => {
+  //     const recRow = rec[scoreRow.subject] ?? []
+  //     const currObj = {studentId: scoreRow.studentId, score: scoreRow.score}
+  //     if (recRow.length === 0) {
+  //       rec[scoreRow.subject] = [currObj]
+  //       return
+  //     }
 
+  //     const newRow = []
+
+  //     recRow.forEach(x => {
+  //       if (scoreRow.score > x.score) {
+
+  //       }
+  //     })
+  // \
+  // })
+  //   return rec;
+
+  return rows
+    .reduce((acc, curr) => {
+      acc[curr.subject] =
+        [...(acc[curr.subject] ?? []), { studentId: curr.studentId, score: curr.score }]
+          .sort((a, b) => b.score - a.score)
+          .slice(0, n)
+      return acc;
+    }, {} as Record<string, { studentId: string; score: number }[]>);
+}
 // ─── Hard ───
 
 export type DocWords = { id: string; words: string[] };
